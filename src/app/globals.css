@@ -1,26 +1,116 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --foreground-rgb: 220, 220, 220;
+  --background-rgb: 15, 15, 15;
+  --primary-color: 59, 130, 246;
+  --secondary-bg: 30, 30, 30;
+  --border-color: 64, 64, 64;
+  --hover-color: 45, 45, 45;
+  --success-color: 34, 197, 94;
+  --error-color: 239, 68, 68;
+  --text-secondary: 156, 163, 175;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  color: rgb(var(--foreground-rgb));
+  background: rgb(var(--background-rgb));
+}
+
+/* Custom scrollbar for dark mode */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgb(var(--background-rgb));
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgb(64, 64, 64);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(80, 80, 80);
+}
+
+/* Loading animations */
+.loading-dots {
+  display: inline-flex;
+  align-items: center;
+}
+
+.loading-dots span {
+  width: 8px;
+  height: 8px;
+  margin: 0 2px;
+  background-color: rgb(var(--foreground-rgb));
+  border-radius: 50%;
+  display: inline-block;
+  animation: bounce 1.4s infinite ease-in-out both;
+}
+
+.loading-dots span:nth-child(1) {
+  animation-delay: -0.32s;
+}
+
+.loading-dots span:nth-child(2) {
+  animation-delay: -0.16s;
+}
+
+@keyframes bounce {
+  0%,
+  80%,
+  100% {
+    transform: scale(0);
+  }
+  40% {
+    transform: scale(1);
+  }
+}
+
+/* Pulse animation for loading states */
+.pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+/* Tailwind custom classes */
+@layer components {
+  .dark-card {
+    @apply bg-[rgb(var(--secondary-bg))] border border-[rgb(var(--border-color))] rounded-lg;
+  }
+
+  .dark-input {
+    @apply bg-[rgb(var(--secondary-bg))] border border-[rgb(var(--border-color))] rounded-lg text-[rgb(var(--foreground-rgb))] focus:ring-blue-500 focus:border-blue-500;
+  }
+
+  .dark-button-primary {
+    @apply bg-blue-600 hover:bg-blue-700 text-white rounded-lg px-4 py-2 transition-colors;
+  }
+
+  .dark-button-secondary {
+    @apply bg-[rgb(var(--secondary-bg))] hover:bg-[rgb(var(--hover-color))] border border-[rgb(var(--border-color))] text-[rgb(var(--foreground-rgb))] rounded-lg px-4 py-2 transition-colors;
+  }
+
+  .sidebar-item {
+    @apply p-2 rounded-lg hover:bg-[rgb(var(--hover-color))] cursor-pointer transition-colors;
+  }
+
+  .sidebar-item-active {
+    @apply bg-[rgb(var(--hover-color))] border-l-2 border-blue-500;
+  }
 }
